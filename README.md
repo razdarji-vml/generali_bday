@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Generali — Birthday Surprise
 
-## Getting Started
+A theatrical, mobile-first birthday moment:
 
-First, run the development server:
+1. **Gate** — "Generali presents…". Tapping *Take your seat* unlocks audio and asks for the mic up-front, so no permission prompt interrupts the show.
+2. **Curtains** — red velvet tied shut with a gold bow. "Starring {name}". Pull the tassel down to snap the ribbon.
+3. **Reveal** — curtains sweep open, spotlight flickers on, drumroll, the cake rises on a stage lift, candles light one by one.
+4. **Blow** — "Make a wish…" then blow into the phone. Flames lean and shrink with your breath; candles go out one by one.
+5. **Finale** — flash, screen shake, confetti cannons + fireworks, brass fanfare, music-box *Happy Birthday*, "Encore" to replay.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+All sound is synthesised with Web Audio (no audio files). Mic audio is analysed locally and never leaves the device.
+
+## Personalise
+
+```
+/?name=Maria
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Add `&debug=1` to show live mic levels (useful for tuning `MIN_THRESHOLD` in `lib/blow.ts`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copy, candle count and brand colours live in `lib/config.ts`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Run
 
-## Learn More
+```bash
+npm run dev          # http://localhost:3000
+npm run dev:https    # HTTPS on your LAN, so a phone can use the mic
+```
 
-To learn more about Next.js, take a look at the following resources:
+The microphone only works on `https://` (or `localhost`). For real phone testing, deploying to Vercel is the easiest route.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+No mic / permission denied? Press & hold anywhere (or hold Space on desktop) to blow.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Files
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `components/Experience.tsx` — stage machine (gate → theatre → celebrate)
+- `components/Curtains.tsx` — curtains, ribbon, bow, draggable tassel, valance
+- `components/Theatre.tsx` — reveal timeline + the blow loop
+- `components/Cake.tsx` — SVG cake and candles
+- `components/Celebration.tsx` — finale
+- `lib/blow.ts` — mic blow detection
+- `lib/audio.ts` — synthesised sound effects
